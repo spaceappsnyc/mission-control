@@ -1,0 +1,2 @@
+export const SAVE_AUTH_TOKEN = 'SAVE_AUTH_TOKEN';
+export const CLEAR_AUTH_TOKEN = 'CLEAR_AUTH_TOKEN';
