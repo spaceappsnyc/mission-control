@@ -3,25 +3,7 @@ import { all, takeLatest, put } from "redux-saga/effects";
 import { parse } from "query-string";
 import { LOCATION_CHANGE, push } from "connected-react-router";
 
-// import store from "./index";
 import { getToken, setToken, clearToken } from "../api";
-
-// export const checkAuth = (nextState, replace) => {
-//   const token = nextState.location.query["access_token"];
-//   if (token) {
-//     setToken(token);
-//     setHeaderToken(token);
-//     store.dispatch(saveAuthToken(token));
-//     replace(nextState.location.pathname);
-//   }
-// };
-
-// export const logout = (nextState, replace) => {
-//   clearToken();
-//   setHeaderToken("");
-//   store.dispatch(clearAuthToken());
-//   replace("/");
-// };
 
 export const SAVE_AUTH_TOKEN = "SAVE_AUTH_TOKEN";
 export const CLEAR_AUTH_TOKEN = "CLEAR_AUTH_TOKEN";

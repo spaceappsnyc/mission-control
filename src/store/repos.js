@@ -9,14 +9,13 @@ export const requestRepos = () => ({ type: REQUEST_REPOS });
 export const receiveRepos = repos => ({ type: RECEIVE_REPOS, repos });
 export const rejectRepos = error => ({ type: REJECT_REPOS, error });
 
-export const fetchRepos = () =>
-  fetch(
-    `${process.env.REACT_APP_GITHUB_URL}/orgs/spaceappsnyc/repos?type=member`
-  );
+const REPOS_URL = `${
+  process.env.REACT_APP_GITHUB_URL
+}/orgs/spaceappsnyc/repos?type=member`;
 
 export function* getRepos(action) {
   try {
-    const repos = yield call(fetchRepos, action);
+    const repos = yield call(fetch, REPOS_URL);
     yield put(receiveRepos(repos));
   } catch (error) {
     yield put(rejectRepos(error.message));

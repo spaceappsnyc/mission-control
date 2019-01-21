@@ -9,14 +9,13 @@ export const requestMembers = () => ({ type: REQUEST_MEMBERS });
 export const receiveMembers = members => ({ type: RECEIVE_MEMBERS, members });
 export const rejectMembers = error => ({ type: REJECT_MEMBERS, error });
 
-export const fetchMembers = () =>
-  fetch(
-    `${process.env.REACT_APP_GITHUB_URL}/orgs/spaceappsnyc/members?per_page=100`
-  );
+const MEMBERS_URL = `${
+  process.env.REACT_APP_GITHUB_URL
+}/orgs/spaceappsnyc/members?per_page=100`;
 
 export function* getMembers(action) {
   try {
-    const members = yield call(fetchMembers, action);
+    const members = yield call(fetch, MEMBERS_URL);
     yield put(receiveMembers(members));
   } catch (error) {
     yield put(rejectMembers(error.message));
