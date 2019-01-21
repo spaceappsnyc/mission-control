@@ -1,16 +1,27 @@
-import { connect } from 'react-redux';
-import Component from './component';
+import { connect } from "react-redux";
+import Component from "./component";
 
-import * as Actions from '../../actions/repos';
+import { requestRepos } from "../../store/repos";
 
-export const mapStateToProps = (state) => {
-  return { ...state.repos };
+export const mapStateToProps = state => ({ ...state.repos });
+
+export const mapDispatchToProps = {
+  requestRepos
 };
 
-export const mapDispatchToProps = (dispatch) => {
-  return {
-    fetchRepos: () => dispatch(Actions.requestRepos())
-  };
-};
+export const mergeProps = (stateProps, dispatchProps, ownProps) => ({
+  ...stateProps,
+  ...dispatchProps,
+  requestRepos: () => {
+    if (stateProps.didInvalidate && !stateProps.isFetching) {
+      dispatchProps.requestRepos();
+    }
+  },
+  ...ownProps
+});
 
-export default connect(mapStateToProps, mapDispatchToProps)(Component);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+  mergeProps
+)(Component);

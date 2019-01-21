@@ -1,16 +1,27 @@
-import { connect } from 'react-redux';
-import Component from './component';
+import { connect } from "react-redux";
+import Component from "./component";
 
-import * as Actions from '../../actions/members';
+import { requestMembers } from "../../store/members";
 
-export const mapStateToProps = (state) => {
-  return { ...state.members };
+export const mapStateToProps = state => state.members;
+
+export const mapDispatchToProps = {
+  requestMembers
 };
 
-export const mapDispatchToProps = (dispatch) => {
-  return {
-    fetchMembers: () => dispatch(Actions.requestMembers())
-  };
-};
+export const mergeProps = (stateProps, dispatchProps, ownProps) => ({
+  ...stateProps,
+  ...dispatchProps,
+  requestMembers: () => {
+    if (stateProps.didInvalidate && !stateProps.isFetching) {
+      dispatchProps.requestMembers();
+    }
+  },
+  ...ownProps
+});
 
-export default connect(mapStateToProps, mapDispatchToProps)(Component);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+  mergeProps
+)(Component);
